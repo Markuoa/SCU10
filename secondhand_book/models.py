@@ -12,6 +12,7 @@ class UserInfo(models.Model):
     password = models.CharField(max_length=20)
     Email = models.EmailField(max_length=30)
     Img = models.CharField(max_length=40, null=True, blank=True)
+    verification_code = models.CharField(max_length=10, null=True, blank=True)
 
 
 class Goods(models.Model):
@@ -23,7 +24,6 @@ class Goods(models.Model):
     Date = models.DateTimeField(auto_now=False, auto_now_add=True)
     UserID = models.ForeignKey('UserInfo', related_name='UserID_Goods', on_delete=models.CASCADE)
     Img = models.CharField(max_length=40, null=True, blank=True)
-
 
 
 

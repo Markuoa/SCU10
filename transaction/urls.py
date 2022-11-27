@@ -23,5 +23,6 @@ urlpatterns = [
     path('homepage/', views.homepage),
     path('homepage&keyword=<str:keyword>/', views.homepage),
     path('index/', views.index),
-    path('individual_info/', views.personal_info)
+    path('individual_info/', views.personal_info),
+    # path('register/', views.register),
 ]

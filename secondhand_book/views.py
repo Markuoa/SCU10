@@ -1,11 +1,11 @@
 # -*- coding: gbk -*-
 import json
 import os.path
-import random
 from django.core.exceptions import *
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, HttpResponse
 from secondhand_book.models import *
+from django.core.mail import send_mail
 # Create your views here.
 
 
@@ -25,20 +25,20 @@ def login(request):
         pwd = str(request.POST.get('pwd'))
         try:
             user = UserInfo.objects.get(Email=ID)
-            # print(user.Email)
-            # print("true:", type(user.password))
-            # print("输入:", type(pwd))
             if pwd == user.password:
                 request.session['is_login'] = True
                 request.session['ID'] = user.UserID
                 request.session.set_expiry(0)
                 response = redirect('../homepage/')
-                response.set_cookie('my_cookie_1:', ID)
+                response.set_cookie('ID', ID)
+                message_text = '你正在登录校园二手书交易平台，我们向你发送这个邮件进行验证以保证是你本人登录，此上'
+                send_mail(subject='你好', message=message_text, from_email='765019392@qq.com',
+                          recipient_list=['765019392@qq.com'], fail_silently=False)
                 return response
             else:
                 return render(request, 'login.html', {'message': '用户名或密码错误'})
         except Exception as e:
-            return render(request, 'login.html', {'message': '用户名或密码错误'})
+            print(e)
 
 
 def homepage(request, keyword=''):
